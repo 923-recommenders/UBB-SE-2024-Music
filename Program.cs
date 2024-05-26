@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using UBB_SE_2024_Music.Data;
+using UBB_SE_2024_Music.Repositories;
+using UBB_SE_2024_Music.Services;
 
 namespace UBB_SE_2024_Music
 {
@@ -19,6 +21,8 @@ namespace UBB_SE_2024_Music
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            builder.Services.AddScoped<ITopGenresService, TopGenresService>();
 
             var app = builder.Build();
 

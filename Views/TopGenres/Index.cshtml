@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Top Genres";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (ViewBag.TopGenres != null)
+{
+    <ul>
+        @foreach (var genre in ViewBag.TopGenres)
+        {
+            <li>@genre.Name - @genre.Minutes - @genre.Percentage</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No data available.</p>
+}
