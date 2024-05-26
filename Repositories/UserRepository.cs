@@ -15,7 +15,7 @@ namespace UBB_SE_2024_Music.Repositories
             string salt = "a$^#shfdyu$^%agb@#%jqd#!cbjhacs!@#!b";
             string encryptedPassword = user.Password + salt;
             user.Password = BCrypt.Net.BCrypt.HashPassword(encryptedPassword);
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
 
         public bool VerifyPassword(string inputPassword, string hashedPassword)
@@ -25,7 +25,7 @@ namespace UBB_SE_2024_Music.Repositories
 
         public async Task<Users> GetUserByUsername(string username)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == username);
+            var user = await context.Users.FirstOrDefaultAsync(u => u.UserName == username);
 
             if (user == null)
             {
@@ -44,7 +44,7 @@ namespace UBB_SE_2024_Music.Repositories
             {
                 user.Role = 1;
             }
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
     }
 }

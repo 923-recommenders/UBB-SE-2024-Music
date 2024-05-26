@@ -31,7 +31,7 @@ namespace UBB_SE_2024_Music.Repositories
         /// the specified criteria.</returns>
         public async Task<UserPlaybackBehaviour> GetUserPlaybackBehaviour(int userId, int? songId = null, DateTime? timestamp = null)
         {
-            IQueryable<UserPlaybackBehaviour> query = _context.UserPlaybackBehaviour.Where(entity => entity.UserId == userId);
+            IQueryable<UserPlaybackBehaviour> query = context.UserPlaybackBehaviour.Where(entity => entity.UserId == userId);
             if (songId.HasValue)
             {
                 query = query.Where(entity => entity.SongId == songId.Value);
@@ -50,7 +50,7 @@ namespace UBB_SE_2024_Music.Repositories
         /// <returns>A list of playback behavior records for the specified user.</returns>
         public async Task<List<UserPlaybackBehaviour>> GetListOfUserPlaybackBehaviourEntities(int userId)
         {
-            return await _context.UserPlaybackBehaviour.Where(entity => entity.UserId == userId).ToListAsync();
+            return await context.UserPlaybackBehaviour.Where(entity => entity.UserId == userId).ToListAsync();
         }
     }
 }

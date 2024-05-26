@@ -6,13 +6,13 @@ namespace UBB_SE_2024_Music.Services
 {
     public class TopGenresService : ITopGenresService
     {
-        private readonly IRepository<SongDataBaseModel> _songRepo;
-        private readonly IRepository<SongRecommendationDetails> _songRecommendationRepo;
+        private readonly IRepository<SongDataBaseModel> songRepo;
+        private readonly IRepository<SongRecommendationDetails> songRecommendationRepo;
 
         public TopGenresService(IRepository<SongDataBaseModel> songRepo, IRepository<SongRecommendationDetails> songRecommendationRepo)
         {
-            _songRepo = songRepo;
-            _songRecommendationRepo = songRecommendationRepo;
+            this.songRepo = songRepo;
+            this.songRecommendationRepo = songRecommendationRepo;
         }
 
         /// <summary>
@@ -22,8 +22,8 @@ namespace UBB_SE_2024_Music.Services
         {
             int totalMinutes = 0;
             Dictionary<string, int> genreCount = new Dictionary<string, int>();
-            var songs = await _songRepo.GetAll();
-            var songDetails = await _songRecommendationRepo.GetAll();
+            var songs = await songRepo.GetAll();
+            var songDetails = await songRecommendationRepo.GetAll();
 
             foreach (var song in songs)
             {
@@ -66,8 +66,8 @@ namespace UBB_SE_2024_Music.Services
         {
             Dictionary<string, int> subgenreCount = new Dictionary<string, int>();
             int totalMinutes = 0;
-            var songs = await _songRepo.GetAll();
-            var songDetails = await _songRecommendationRepo.GetAll();
+            var songs = await songRepo.GetAll();
+            var songDetails = await songRecommendationRepo.GetAll();
 
             foreach (var song in songs)
             {

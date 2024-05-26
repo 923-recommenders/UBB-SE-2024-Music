@@ -10,11 +10,11 @@ namespace UBB_SE_2024_Music.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserRepository userRepository;
 
         public UserService(IUserRepository userRepository)
         {
-            _userRepository = userRepository;
+            this.userRepository = userRepository;
         }
         public async Task<bool> RegisterUser(string username, string password, string country, string email, int age)
         {
@@ -45,7 +45,7 @@ namespace UBB_SE_2024_Music.Services
                     throw new ArgumentException("Please select a valid age");
                 }
 
-                var potentialUserWithSameUsername = await _userRepository.GetUserByUsername(username);
+                var potentialUserWithSameUsername = await userRepository.GetUserByUsername(username);
                 if (potentialUserWithSameUsername != null)
                 {
                     throw new ArgumentException("This username is already taken");
@@ -61,8 +61,8 @@ namespace UBB_SE_2024_Music.Services
                     Role = 1
                 };
 
-                await _userRepository.BcryptPassword(user);
-                await _userRepository.Add(user);
+                await userRepository.BcryptPassword(user);
+                await userRepository.Add(user);
 
                 return true;
             }
@@ -86,14 +86,14 @@ namespace UBB_SE_2024_Music.Services
                     throw new ArgumentException("Password is required");
                 }
 
-                var user = await _userRepository.GetUserByUsername(username);
+                var user = await userRepository.GetUserByUsername(username);
 
                 if (user == null)
                 {
                     throw new ArgumentException("Invalid username or password");
                 }
 
-                if (!_userRepository.VerifyPassword(password, user.Password))
+                if (!userRepository.VerifyPassword(password, user.Password))
                 {
                     return null;
                 }
@@ -130,14 +130,14 @@ namespace UBB_SE_2024_Music.Services
                     throw new ArgumentException("Invalid user ID");
                 }
 
-                var user = await _userRepository.GetById(userId);
+                var user = await userRepository.GetById(userId);
 
                 if (user == null)
                 {
                     throw new ArgumentException("Invalid username ID");
                 }
 
-                await _userRepository.EnableOrDisableArtist(user);
+                await userRepository.EnableOrDisableArtist(user);
 
                 return true;
             }

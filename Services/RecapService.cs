@@ -6,13 +6,13 @@ namespace UBB_SE_2024_Music.Services
 {
     public class RecapService : IRecapService
     {
-        private readonly ISongBasicDetailsRepository _songBasicDetailsRepository;
-        private readonly IUserPlaybackBehaviourRepository _userPlaybackBehaviourRepository;
+        private readonly ISongBasicDetailsRepository songBasicDetailsRepository;
+        private readonly IUserPlaybackBehaviourRepository userPlaybackBehaviourRepository;
 
         public RecapService(ISongBasicDetailsRepository songBasicDetailsRepository, IUserPlaybackBehaviourRepository userPlaybackBehaviourRepository)
         {
-            _songBasicDetailsRepository = songBasicDetailsRepository;
-            _userPlaybackBehaviourRepository = userPlaybackBehaviourRepository;
+            this.songBasicDetailsRepository = songBasicDetailsRepository;
+            this.userPlaybackBehaviourRepository = userPlaybackBehaviourRepository;
         }
 
         /// <summary>
@@ -22,11 +22,11 @@ namespace UBB_SE_2024_Music.Services
         /// <returns>A list of the top 5 most listened songs.</returns>
         public async Task<List<SongBasicInformation>> GetTheTop5MostListenedSongs(int userId)
         {
-            var top5Songs = await _songBasicDetailsRepository.GetTop5MostListenedSongs(userId);
+            var top5Songs = await songBasicDetailsRepository.GetTop5MostListenedSongs(userId);
             List<SongBasicInformation> top5SongsInformation = new List<SongBasicInformation>();
             foreach (var song in top5Songs)
             {
-                top5SongsInformation.Add(await _songBasicDetailsRepository.TransformSongBasicDetailsToSongBasicInfo(song));
+                top5SongsInformation.Add(await songBasicDetailsRepository.TransformSongBasicDetailsToSongBasicInfo(song));
             }
             return top5SongsInformation;
         }
@@ -39,8 +39,8 @@ namespace UBB_SE_2024_Music.Services
         /// and its percentile.</returns>
         public async Task<Tuple<SongBasicInformation, decimal>> GetTheMostPlayedSongPercentile(int userId)
         {
-            var mostPlayedSong = await _songBasicDetailsRepository.GetMostPlayedSongPercentile(userId);
-            return new Tuple<SongBasicInformation, decimal>(await _songBasicDetailsRepository.TransformSongBasicDetailsToSongBasicInfo(mostPlayedSong.Item1), mostPlayedSong.Item2);
+            var mostPlayedSong = await songBasicDetailsRepository.GetMostPlayedSongPercentile(userId);
+            return new Tuple<SongBasicInformation, decimal>(await songBasicDetailsRepository.TransformSongBasicDetailsToSongBasicInfo(mostPlayedSong.Item1), mostPlayedSong.Item2);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace UBB_SE_2024_Music.Services
         /// <returns>A tuple containing the most played artist and its percentile.</returns>
         public async Task<Tuple<string, decimal>> GetTheMostPlayedArtistPercentile(int userId)
         {
-            return await _songBasicDetailsRepository.GetMostPlayedArtistPercentile(userId);
+            return await songBasicDetailsRepository.GetMostPlayedArtistPercentile(userId);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace UBB_SE_2024_Music.Services
         /// <returns>The total minutes listened by the user.</returns>
         public async Task<int> GetTotalMinutesListened(int userId)
         {
-            var userEvents = await _userPlaybackBehaviourRepository.GetListOfUserPlaybackBehaviourEntities(userId);
+            var userEvents = await userPlaybackBehaviourRepository.GetListOfUserPlaybackBehaviourEntities(userId);
             int totalMinutesListened = 0;
             for (int firstCounter = 0; firstCounter < userEvents.Count; firstCounter++)
             {
@@ -87,7 +87,7 @@ namespace UBB_SE_2024_Music.Services
         /// <returns>A list of the top 5 genres.</returns>
         public async Task<List<string>> GetTheTop5Genres(int userId)
         {
-            return await _songBasicDetailsRepository.GetTop5Genres(userId);
+            return await songBasicDetailsRepository.GetTop5Genres(userId);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace UBB_SE_2024_Music.Services
         /// <returns>A list of new genres discovered by the user.</returns>
         public async Task<List<string>> GetNewGenresDiscovered(int userId)
         {
-            return await _songBasicDetailsRepository.GetAllNewGenresDiscovered(userId);
+            return await songBasicDetailsRepository.GetAllNewGenresDiscovered(userId);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace UBB_SE_2024_Music.Services
         /// <returns>The listener personality of the user.</returns>
         public async Task<ListenerPersonality> GetListenerPersonality(int userId)
         {
-            var userEvents = await _userPlaybackBehaviourRepository.GetListOfUserPlaybackBehaviourEntities(userId);
+            var userEvents = await userPlaybackBehaviourRepository.GetListOfUserPlaybackBehaviourEntities(userId);
             int playCount = 0;
             for (int counter = 0; counter < userEvents.Count; counter++)
             {
