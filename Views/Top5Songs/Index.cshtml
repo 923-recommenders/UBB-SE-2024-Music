@@ -1,0 +1,48 @@
+﻿@model List<UBB_SE_2024_Music.DTO.SongBasicInformation>
+
+@{
+    ViewData["Title"] = "Top 5 Most Listened Songs";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Song ID</th>
+                <th>Name</th>
+                <th>Genre</th>
+                <th>Subgenre</th>
+                <th>Artist</th>
+                <th>Language</th>
+                <th>Country</th>
+                <th>Album</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var song in Model)
+            {
+                <tr>
+                    <td>@song.SongId</td>
+                    <td>@song.Name</td>
+                    <td>@song.Genre</td>
+                    <td>@song.Subgenre</td>
+                    <td>@song.Artist</td>
+                    <td>@song.Language</td>
+                    <td>@song.Country</td>
+                    <td>@song.Album</td>
+                    <td>
+                        <img src="~/images/@song.Image" alt="@song.Name" style="width:100px;height:auto;" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No songs found.</p>
+}
