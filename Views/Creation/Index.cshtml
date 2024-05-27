@@ -1,0 +1,29 @@
+﻿@model IEnumerable<UBB_SE_2024_Music.Models.Sound>
+
+@{
+    ViewData["Title"] = "All Sounds";
+}
+
+<h2>All Sounds</h2>
+
+<form asp-action="AddSoundToCreation" method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Sound Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sound in Model)
+            {
+                <tr>
+                    <td>@sound.Name</td>
+                    <td>
+                        <button type="submit" name="soundId" value="@sound.Id" class="btn btn-primary">Add to Creation</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>

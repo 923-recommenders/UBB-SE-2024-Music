@@ -14,11 +14,11 @@ namespace UBB_SE_2024_Music.Controllers
             this.playlistService = playlistService ?? throw new ArgumentNullException(nameof(playlistService));
         }
 
-        public async Task<IActionResult> Details(int playlistId)
+        public async Task<IActionResult> Details(int id)
         {
             try
             {
-                var playlist = await playlistService.GetPlaylistById(playlistId);
+                var playlist = await playlistService.GetPlaylistById(id);
                 if (playlist == null)
                 {
                     return NotFound();
@@ -92,7 +92,7 @@ namespace UBB_SE_2024_Music.Controllers
             try
             {
                 var addedPlaylist = await playlistService.AddPlaylist(playlistModel);
-                return RedirectToAction(nameof(Details), new { playlistId = addedPlaylist.Id });
+                return RedirectToAction(nameof(Details), new { id = addedPlaylist.Id });
             }
             catch (ValidationException ex)
             {
@@ -106,9 +106,9 @@ namespace UBB_SE_2024_Music.Controllers
             }
         }
 
-        public async Task<IActionResult> Edit(int playlistId)
+        public async Task<IActionResult> Edit(int id)
         {
-            var playlist = await playlistService.GetPlaylistById(playlistId);
+            var playlist = await playlistService.GetPlaylistById(id);
             if (playlist == null)
             {
                 return NotFound();
@@ -118,7 +118,7 @@ namespace UBB_SE_2024_Music.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int playlistId, PlaylistForAddUpdateModel playlistModel)
+        public async Task<IActionResult> Edit(int id, PlaylistForAddUpdateModel playlistModel)
         {
             if (!ModelState.IsValid)
             {
@@ -127,13 +127,13 @@ namespace UBB_SE_2024_Music.Controllers
 
             try
             {
-                var updated = await playlistService.UpdatePlaylist(playlistId, playlistModel);
+                var updated = await playlistService.UpdatePlaylist(id, playlistModel);
                 if (!updated)
                 {
                     return NotFound();
                 }
 
-                return RedirectToAction(nameof(Details), new { playlistId });
+                return RedirectToAction(nameof(Details), new { id });
             }
             catch (ValidationException ex)
             {
@@ -147,9 +147,9 @@ namespace UBB_SE_2024_Music.Controllers
             }
         }
 
-        public async Task<IActionResult> Delete(int playlistId)
+        public async Task<IActionResult> Delete(int id)
         {
-            var playlist = await playlistService.GetPlaylistById(playlistId);
+            var playlist = await playlistService.GetPlaylistById(id);
             if (playlist == null)
             {
                 return NotFound();
@@ -159,11 +159,11 @@ namespace UBB_SE_2024_Music.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int playlistId)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             try
             {
-                var deleted = await playlistService.DeletePlaylist(playlistId);
+                var deleted = await playlistService.DeletePlaylist(id);
                 if (!deleted)
                 {
                     return NotFound();

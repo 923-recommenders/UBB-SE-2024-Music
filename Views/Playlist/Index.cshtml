@@ -12,36 +12,21 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImagePath)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsPrivate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
-            </th>
+            <th>@Html.DisplayNameFor(model => model.First().Name)</th>
+            <th>@Html.DisplayNameFor(model => model.First().ImagePath)</th>
+            <th>@Html.DisplayNameFor(model => model.First().IsPrivate)</th>
+            <th>@Html.DisplayNameFor(model => model.First().UserId)</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayNameFor(model => model.ImagePath)
-                </td>
-                <td>
-                    @Html.DisplayNameFor(model => model.IsPrivate)
-                </td>
-                <td>
-                    @Html.DisplayNameFor(model => model.UserId)
-                </td>
+                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.ImagePath)</td>
+                <td>@Html.DisplayFor(modelItem => item.IsPrivate)</td>
+                <td>@Html.DisplayFor(modelItem => item.UserId)</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
