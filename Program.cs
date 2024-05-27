@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using UBB_SE_2024_Music.Data;
+using UBB_SE_2024_Music.Models;
 using UBB_SE_2024_Music.Repositories;
 using UBB_SE_2024_Music.Services;
 
@@ -21,6 +22,17 @@ namespace UBB_SE_2024_Music
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddScoped<IRepository<Song>, Repository<Song>>();
+            builder.Services.AddScoped<IRepository<SongFeatures>, Repository<SongFeatures>>();
+            builder.Services.AddScoped<IRepository<SongRecommendationDetails>, Repository<SongRecommendationDetails>>();
+            builder.Services.AddScoped<IRepository<ArtistDetails>, Repository<ArtistDetails>>();
+            builder.Services.AddScoped<ArtistDashboardService>();
+
+
+            builder.Services.AddScoped<IRecapService, RecapService>();
+            builder.Services.AddScoped<ISongBasicDetailsRepository, SongRepository>();
+            builder.Services.AddScoped<IUserPlaybackBehaviourRepository, UserPlaybackBehaviourRepository>();
 
             builder.Services.AddTransient<IUserRepository, UserRepository>();
             builder.Services.AddTransient<IUserService, UserService>();

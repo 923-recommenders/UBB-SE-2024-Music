@@ -1,0 +1,22 @@
+﻿@model string
+
+<h1>Search Bar</h1>
+
+<form asp-controller="ArtistDashboard" asp-action="Search" method="get">
+    <div class="form-group">
+        <label for="searchInput">Search for Song:</label>
+        <input type="text" class="form-control" id="searchInput" name="title" value="@Model" placeholder="Enter song title">
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#searchButton').click(function () {
+                var searchTerm = $('#searchInput').val();
+                window.location.href = '/ArtistDashboard/Search?title=' + searchTerm;
+            });
+        });
+    </script>
+}

@@ -3,15 +3,15 @@ using UBB_SE_2024_Music.Models;
 
 namespace UBB_SE_2024_Music.Repositories
 {
-    public interface ISongBasicDetailsRepository : IRepository<SongDataBaseModel>
+    public interface ISongBasicDetailsRepository : IRepository<Song>
     {
-        Task<SongBasicInformation> TransformSongBasicDetailsToSongBasicInfo(SongDataBaseModel song);
+        Task<SongBasicInformation> TransformSongBasicDetailsToSongBasicInfo(Song song);
 
-        Task<SongDataBaseModel> GetSongBasicDetails(int songId);
+        Task<Song> GetSongBasicDetails(int songId);
 
-        Task<List<SongDataBaseModel?>> GetTop5MostListenedSongs(int userId);
+        Task<List<Song?>> GetTop5MostListenedSongs(int userId);
 
-        Task<Tuple<SongDataBaseModel, decimal>> GetMostPlayedSongPercentile(int userId);
+        Task<Tuple<Song, decimal>> GetMostPlayedSongPercentile(int userId);
 
         Task<Tuple<string, decimal>> GetMostPlayedArtistPercentile(int userId);
 
