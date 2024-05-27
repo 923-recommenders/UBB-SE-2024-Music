@@ -29,7 +29,6 @@ namespace UBB_SE_2024_Music
             builder.Services.AddScoped<IRepository<ArtistDetails>, Repository<ArtistDetails>>();
             builder.Services.AddScoped<ArtistDashboardService>();
 
-
             builder.Services.AddScoped<IRecapService, RecapService>();
             builder.Services.AddScoped<ISongBasicDetailsRepository, SongRepository>();
             builder.Services.AddScoped<IUserPlaybackBehaviourRepository, UserPlaybackBehaviourRepository>();
