@@ -2,6 +2,7 @@
 
 #nullable disable
 
+
 namespace UBB_SE_2024_Music.Data.Migrations
 {
     /// <inheritdoc />

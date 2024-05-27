@@ -21,6 +21,7 @@ using Microsoft.Extensions.Logging;
 using UBB_SE_2024_Music.Models;
 using UBB_SE_2024_Music.Services;
 
+
 namespace UBB_SE_2024_Music.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
