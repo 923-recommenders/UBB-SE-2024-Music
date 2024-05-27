@@ -2,8 +2,7 @@
 {
     public interface IUserService
     {
-        Task<bool> RegisterUser(string username, string password, string country, string email, int age);
-        Task<string> AuthenticateUser(string username, string password);
+        Task<bool> RegisterUser(string username, string country, string email, int age);
         Task<bool> EnableOrDisableArtist(int userId);
     }
 }

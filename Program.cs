@@ -22,7 +22,7 @@ namespace UBB_SE_2024_Music
                 options.UseSqlServer(connectionString), ServiceLifetime.Singleton);
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
 
@@ -38,6 +38,11 @@ namespace UBB_SE_2024_Music
             builder.Services.AddSingleton<ICreationRepository, CreationRepository>();
             builder.Services.AddSingleton<ISongRepository, SongRepository>();
 
+<<<<<<< authentication
+            builder.Services.AddScoped<IRecapService, RecapService>();
+            builder.Services.AddScoped<ISongBasicDetailsRepository, SongRepository>();
+            builder.Services.AddScoped<IUserPlaybackBehaviourRepository, UserPlaybackBehaviourRepository>();
+=======
             // Inject services
             builder.Services.AddSingleton<ISoundService, SoundService>();
             builder.Services.AddSingleton<ISongService, SongService>();
@@ -53,6 +58,10 @@ namespace UBB_SE_2024_Music
             builder.Services.AddSingleton<IRecapService, RecapService>();
             builder.Services.AddSingleton<ISongBasicDetailsRepository, SongRepository>();
             builder.Services.AddSingleton<IUserPlaybackBehaviourRepository, UserPlaybackBehaviourRepository>();
+>>>>>>> main
+
+            builder.Services.AddTransient<IUserRepository, UserRepository>();
+            builder.Services.AddTransient<IUserService, UserService>();
 
             var app = builder.Build();
 
