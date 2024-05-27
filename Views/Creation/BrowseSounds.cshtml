@@ -1,14 +1,9 @@
 ﻿@model IEnumerable<UBB_SE_2024_Music.Models.Sound>
 
 @{
-    ViewData["Title"] = "All Sounds";
+    ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="BrowseSounds">Browse sounds</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -24,9 +19,9 @@
                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
                 <td>@Html.DisplayFor(modelItem => item.Type)</td>
                 <td>
-                    <form asp-action="DeleteSoundFromCreation">
+                    <form asp-action="UseSoundForCreation" method="post">
                         <input type="hidden" name="id" value="@item.Id" />
-                        <button type="submit">Delete</button>
+                        <button type="submit">Use sound</button>
                     </form>
                 </td>
             </tr>
