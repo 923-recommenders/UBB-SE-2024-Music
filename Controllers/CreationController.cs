@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 using UBB_SE_2024_Music.Models;
 using UBB_SE_2024_Music.Services;
 using UBB_SE_2024_Music.Services.Interfaces;
