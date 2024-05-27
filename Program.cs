@@ -5,6 +5,7 @@ using UBB_SE_2024_Music.Mappings;
 using UBB_SE_2024_Music.Repositories.Interfaces;
 using UBB_SE_2024_Music.Repositories;
 using UBB_SE_2024_Music.Services.Interfaces;
+using UBB_SE_2024_Music.Models;
 using UBB_SE_2024_Music.Services;
 
 namespace UBB_SE_2024_Music
@@ -32,7 +33,6 @@ namespace UBB_SE_2024_Music
 
             // Inject repositories
             builder.Services.AddSingleton<ISoundRepository, SoundRepository>();
-            builder.Services.AddSingleton<ISongRepository, SongRepository>();
             builder.Services.AddSingleton<IPlaylistRepository, PlaylistRepository>();
             builder.Services.AddSingleton<IPlaylistSongItemRepository, PlaylistSongItemRepository>();
             builder.Services.AddSingleton<ICreationRepository, CreationRepository>();
@@ -43,6 +43,16 @@ namespace UBB_SE_2024_Music
             builder.Services.AddSingleton<IPlaylistService, PlaylistService>();
             builder.Services.AddSingleton<IPlaylistSongItemService, PlaylistSongItemService>();
             builder.Services.AddSingleton<ICreationService, CreationService>();
+            builder.Services.AddScoped<IRepository<Song>, Repository<Song>>();
+            builder.Services.AddScoped<IRepository<SongFeatures>, Repository<SongFeatures>>();
+            builder.Services.AddScoped<IRepository<SongRecommendationDetails>, Repository<SongRecommendationDetails>>();
+            builder.Services.AddScoped<IRepository<ArtistDetails>, Repository<ArtistDetails>>();
+            builder.Services.AddScoped<ArtistDashboardService>();
+
+
+            builder.Services.AddScoped<IRecapService, RecapService>();
+            builder.Services.AddScoped<ISongBasicDetailsRepository, SongRepository>();
+            builder.Services.AddScoped<IUserPlaybackBehaviourRepository, UserPlaybackBehaviourRepository>();
 
             var app = builder.Build();
 
