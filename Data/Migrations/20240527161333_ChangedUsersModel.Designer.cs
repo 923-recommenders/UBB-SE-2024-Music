@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UBB_SE_2024_Music.Data;
 
@@ -11,9 +12,11 @@ using UBB_SE_2024_Music.Data;
 namespace UBB_SE_2024_Music.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240527161333_ChangedUsersModel")]
+    partial class ChangedUsersModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,23 +227,6 @@ namespace UBB_SE_2024_Music.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("NamespaceCBlurred.Data.Models.Creation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Creations");
-                });
-
             modelBuilder.Entity("UBB_SE_2024_Music.Models.AdDistributionData", b =>
                 {
                     b.Property<int>("SongId")
@@ -300,29 +286,6 @@ namespace UBB_SE_2024_Music.Data.Migrations
                     b.HasKey("CountryId");
 
                     b.ToTable("Countries");
-                });
-
-            modelBuilder.Entity("UBB_SE_2024_Music.Models.CreationSoundItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CreationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SoundId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreationId");
-
-                    b.HasIndex("SoundId");
-
-                    b.ToTable("CreationSoundItems");
                 });
 
             modelBuilder.Entity("UBB_SE_2024_Music.Models.ExcludedCountry", b =>
@@ -412,13 +375,6 @@ namespace UBB_SE_2024_Music.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SongId"));
 
-                    b.Property<string>("Album")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ArtistId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ArtistName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -457,6 +413,50 @@ namespace UBB_SE_2024_Music.Data.Migrations
                     b.HasKey("SongId");
 
                     b.ToTable("Songs");
+                });
+
+            modelBuilder.Entity("UBB_SE_2024_Music.Models.SongDataBaseModel", b =>
+                {
+                    b.Property<int>("SongId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SongId"));
+
+                    b.Property<string>("Album")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ArtistId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Genre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subgenre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SongId");
+
+                    b.ToTable("SongDataBaseModel");
                 });
 
             modelBuilder.Entity("UBB_SE_2024_Music.Models.SongFeatures", b =>
@@ -697,25 +697,6 @@ namespace UBB_SE_2024_Music.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("UBB_SE_2024_Music.Models.CreationSoundItem", b =>
-                {
-                    b.HasOne("NamespaceCBlurred.Data.Models.Creation", "Creation")
-                        .WithMany()
-                        .HasForeignKey("CreationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("UBB_SE_2024_Music.Models.Sound", "Sound")
-                        .WithMany()
-                        .HasForeignKey("SoundId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Creation");
-
-                    b.Navigation("Sound");
                 });
 
             modelBuilder.Entity("UBB_SE_2024_Music.Models.PlaylistSongItem", b =>

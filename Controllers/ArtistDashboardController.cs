@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using UBB_SE_2024_Music.Services;
 
 namespace UBB_SE_2024_Music.Controllers
 {
+    [Authorize]
     public class ArtistDashboardController : Controller
     {
         private readonly ArtistDashboardService artistDashboardService;
@@ -12,9 +14,9 @@ namespace UBB_SE_2024_Music.Controllers
             this.artistDashboardService = artistDashboardService;
         }
 
-        public async Task<IActionResult> Index(int artistId)
+        public async Task<IActionResult> Index(string artistName)
         {
-            var artistSongs = await artistDashboardService.GetAllArtistSongsAsync(artistId);
+            var artistSongs = await artistDashboardService.GetAllArtistSongsAsync(artistName);
             return View(artistSongs);
         }
 

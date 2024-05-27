@@ -1,4 +1,6 @@
+﻿using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using UBB_SE_2024_Music.Data;
 using UBB_SE_2024_Music.DTO;
 using UBB_SE_2024_Music.Enums;

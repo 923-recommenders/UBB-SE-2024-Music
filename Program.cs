@@ -22,9 +22,21 @@ namespace UBB_SE_2024_Music
                 options.UseSqlServer(connectionString), ServiceLifetime.Singleton);
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<IRepository<Song>, Repository<Song>>();
+            builder.Services.AddScoped<IRepository<SongFeatures>, Repository<SongFeatures>>();
+            builder.Services.AddScoped<IRepository<SongRecommendationDetails>, Repository<SongRecommendationDetails>>();
+            builder.Services.AddScoped<IRepository<ArtistDetails>, Repository<ArtistDetails>>();
+            builder.Services.AddScoped<ArtistDashboardService>();
+
+            builder.Services.AddTransient<IUserRepository, UserRepository>();
+            builder.Services.AddTransient<IUserService, UserService>();
+
+            builder.Services.AddScoped<IRecapService, RecapService>();
+            builder.Services.AddScoped<ISongBasicDetailsRepository, SongRepository>();
+            builder.Services.AddScoped<IUserPlaybackBehaviourRepository, UserPlaybackBehaviourRepository>();
 
             // Inject automappers
             builder.Services.AddAutoMapper(typeof(SoundMappingProfile));
