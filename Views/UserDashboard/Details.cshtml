@@ -1,0 +1,21 @@
+﻿@model UBB_SE_2024_Music.DTO.SongBasicInformation
+
+<h1>Song Details</h1>
+
+<div>
+    <h2>@Model.Name</h2>
+    <p>Artist: @Model.Artist</p>
+    <p>Genre: @Model.Genre</p>
+    <p>Subgenre: @Model.Subgenre</p>
+    <p>Language: @Model.Language</p>
+    <p>Country: @Model.Country</p>
+    <p>Album: @Model.Album</p>
+    <p>Image: @Model.Image</p>
+    <h3>Features</h3>
+    <ul>
+        @foreach (var feature in Model.Features)
+        {
+            <li>@feature</li>
+        }
+    </ul>
+</div>

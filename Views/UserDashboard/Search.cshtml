@@ -1,0 +1,12 @@
+﻿@model List<UBB_SE_2024_Music.DTO.SongBasicInformation>
+
+<h1>Search Results</h1>
+
+<ul>
+    @foreach (var song in Model)
+    {
+        <li>
+            @Html.ActionLink(song.Name, "Details", "UserDashboard", new { songId = song.SongId }, null)
+        </li>
+    }
+</ul>

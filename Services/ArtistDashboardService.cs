@@ -34,13 +34,15 @@ namespace UBB_SE_2024_Music.Services
             };
 
             var artists = await artistRepository.GetAll();
-            var artist = artists.FirstOrDefault(a => a.ArtistId == song.ArtistId);
+            var artist = artists.FirstOrDefault(artist => artist.ArtistId == song.ArtistId);
             if (artist != null)
             {
                 songInfo.Artist = artist.Name;
             }
 
-            var features = (await featureRepository.GetAll()).Where(f => f.SongId == song.SongId).ToList();
+            var features = (await featureRepository
+                .GetAll())
+                .Where(feature => feature.SongId == song.SongId).ToList();
             foreach (var feature in features)
             {
                 songInfo.Features.Add(feature.ToString());
