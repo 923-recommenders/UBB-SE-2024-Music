@@ -23,7 +23,7 @@ namespace UBB_SE_2024_Music
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddScoped<IRecapService, RecapService>();
-            builder.Services.AddScoped<ISongBasicDetailsRepository, SongBasicDetailsRepository>();
+            builder.Services.AddScoped<ISongBasicDetailsRepository, SongRepository>();
             builder.Services.AddScoped<IUserPlaybackBehaviourRepository, UserPlaybackBehaviourRepository>();
 
             var app = builder.Build();
