@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -7,34 +10,37 @@
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
-<div class="searchBars">
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="searchBars">
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h5>Enter a name, and see all songs with that name and their details!</h5>
-            <form asp-controller="ArtistDashboard" asp-action="Search" method="get">
-                <div class="form-group">
-                    <input type="text" class="form-control" id="searchInput" name="title" placeholder="song name here...">
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <h5>Enter a name, and see all songs with that name and their details!</h5>
+                    <form asp-controller="ArtistDashboard" asp-action="Search" method="get">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="searchInput" name="title" placeholder="song name here...">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
                 </div>
-                <button type="submit" class="btn btn-primary">Search</button>
-            </form>
+            </div>
         </div>
-    </div>
-</div>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h5>Enter the artist you like, and see a list of all their songs!</h5>
-            <form asp-controller="ArtistDashboard" asp-action="Index" method="get">
-                <div class="form-group">
-                    <input type="text" class="form-control" id="artistIdInput" name="artistId" placeholder="artist id here...">
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <h5>Enter the artist you like, and see a list of all their songs!</h5>
+                    <form asp-controller="ArtistDashboard" asp-action="Index" method="get">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="artistIdInput" name="artistId" placeholder="artist id here...">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
                 </div>
-                <button type="submit" class="btn btn-primary">Search</button>
-            </form>
+            </div>
         </div>
+
     </div>
-</div>
-    
-</div>
+}
