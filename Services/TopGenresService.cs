@@ -6,10 +6,10 @@ namespace UBB_SE_2024_Music.Services
 {
     public class TopGenresService : ITopGenresService
     {
-        private readonly IRepository<SongDataBaseModel> songRepo;
+        private readonly IRepository<Song> songRepo;
         private readonly IRepository<SongRecommendationDetails> songRecommendationRepo;
 
-        public TopGenresService(IRepository<SongDataBaseModel> songRepo, IRepository<SongRecommendationDetails> songRecommendationRepo)
+        public TopGenresService(IRepository<Song> songRepo, IRepository<SongRecommendationDetails> songRecommendationRepo)
         {
             this.songRepo = songRepo;
             this.songRecommendationRepo = songRecommendationRepo;

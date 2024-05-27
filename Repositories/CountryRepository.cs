@@ -23,7 +23,7 @@ namespace UBB_SE_2024_Music.Repositories
 
         public async Task<Country> GetByName(string name)
         {
-            var country = await context.Countries.FirstOrDefaultAsync(u => u.Name == name);
+            var country = await context.Countries.FirstOrDefaultAsync(country => country.Name == name);
 
             if (country == null)
             {
