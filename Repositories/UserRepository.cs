@@ -10,6 +10,19 @@ namespace UBB_SE_2024_Music.Repositories
         {
         }
 
+        public async Task BcryptPassword(Users user)
+        {
+            string salt = "a$^#shfdyu$^%agb@#%jqd#!cbjhacs!@#!b";
+            string encryptedPassword = user.Password + salt;
+            user.Password = BCrypt.Net.BCrypt.HashPassword(encryptedPassword);
+            await context.SaveChangesAsync();
+        }
+
+        public bool VerifyPassword(string inputPassword, string hashedPassword)
+        {
+            return BCrypt.Net.BCrypt.Verify(inputPassword + "a$^#shfdyu$^%agb@#%jqd#!cbjhacs!@#!b", hashedPassword);
+        }
+
         public async Task<Users> GetUserByUsername(string username)
         {
             var user = await context.Users.FirstOrDefaultAsync(u => u.UserName == username);
