@@ -1,35 +1,41 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using AutoMapper;
 using Microsoft.IdentityModel.Tokens;
 using UBB_SE_2024_Music.Models;
-using UBB_SE_2024_Music.Repositories;
+using UBB_SE_2024_Music.Repositories.Interfaces;
+using UBB_SE_2024_Music.Services.Interfaces;
 
 namespace UBB_SE_2024_Music.Services
 {
-    public interface ISongService
-    {
-        Task<Song?> GetSongById(int songId);
-        Task<IEnumerable<Song>> GetAllSongs();
-        Task AddSong(Song song);
-        Task DeleteSong(Song song);
-    }
     public class SongService : ISongService
     {
-        private readonly IRepository<Song> repository;
-        private readonly IRepository<Users> userRepository;
+        private readonly ISongRepository songRepository;
+        private readonly IMapper mapper;
 
-        public SongService(IRepository<Song> repository, IRepository<Users> userRepository)
+        public SongService(ISongRepository songRepository, IMapper mapper)
         {
-            this.repository = repository;
-            this.userRepository = userRepository;
+            this.songRepository = songRepository ?? throw new ArgumentNullException(nameof(songRepository));
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
-        private static bool ValidSong(Song song)
+
+        private static bool ValidSongModel(SongForAddUpdateModel songModel)
         {
-            if (song.Name.IsNullOrEmpty() || song.ArtistName.IsNullOrEmpty())
+            if (songModel.Name.IsNullOrEmpty() || songModel.ArtistName.IsNullOrEmpty())
             {
                 return false;
             }
 
-            if (song.SongPath.IsNullOrEmpty() || song.ImagePath.IsNullOrEmpty())
+            if (songModel.Genre.IsNullOrEmpty() || songModel.Subgenre.IsNullOrEmpty())
+            {
+                return false;
+            }
+
+            if (songModel.Language.IsNullOrEmpty() || songModel.Country.IsNullOrEmpty())
+            {
+                return false;
+            }
+
+            if (songModel.SongPath.IsNullOrEmpty() || songModel.ImagePath.IsNullOrEmpty())
             {
                 return false;
             }
@@ -37,48 +43,59 @@ namespace UBB_SE_2024_Music.Services
             return true;
         }
 
-        public async Task<Users> GetUserById(int id)
+        public async Task<Song> AddSong(SongForAddUpdateModel songModel)
         {
-            return await userRepository.GetById(id);
-        }
-
-        public async Task<IEnumerable<Song>> GetAllSongs()
-        {
-            return await repository.GetAll();
-        }
-
-        public async Task<Song> GetSongById(int id)
-        {
-            return await repository.GetById(id);
-        }
-
-        public async Task AddSong(Song song)
-        {
-            if (!ValidSong(song))
+            if (!ValidSongModel(songModel))
             {
                 throw new ValidationException("Invalid song data.");
             }
 
-            try
-            {
-                await repository.Add(song);
-            }
-            catch (Exception)
-            {
-                throw new ArgumentException("Database internal song add error");
-            }
+            var song = mapper.Map<Song>(songModel);
+
+            int id = await songRepository.AddSong(song);
+            song.SongId = id;
+
+            return song;
         }
 
-        public async Task DeleteSong(Song song)
+        public async Task<bool> DeleteSong(int songId)
         {
-            try
+            if (songId < 0)
             {
-                await repository.Delete(song);
+                throw new ValidationException("Invalid song id.");
             }
-            catch (Exception)
+
+            return await songRepository.DeleteSong(songId);
+        }
+
+        public async Task<IEnumerable<Song>> GetAllSongs()
+        {
+            return await songRepository.GetAllSongs();
+        }
+
+        public async Task<Song?> GetSongById(int songId)
+        {
+            if (songId < 0)
             {
-                throw new ArgumentException("Database internal song delete eror");
+                throw new ValidationException("Invalid song id.");
             }
+
+            return await songRepository.GetSongById(songId);
+        }
+
+        public async Task<bool> UpdateSong(int songId, SongForAddUpdateModel songModel)
+        {
+            if (songId < 0)
+            {
+                throw new ValidationException("Invalid song id.");
+            }
+
+            if (!ValidSongModel(songModel))
+            {
+                throw new ValidationException("Invalid song data.");
+            }
+
+            return await songRepository.UpdateSong(songId, mapper.Map<Song>(songModel));
         }
     }
 }
