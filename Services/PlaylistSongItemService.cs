@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using UBB_SE_2024_Music.Models;
 using UBB_SE_2024_Music.Repositories;
+using UBB_SE_2024_Music.Services.Interfaces;
 
 namespace UBB_SE_2024_Music.Services
 {

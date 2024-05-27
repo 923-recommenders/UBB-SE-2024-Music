@@ -60,7 +60,7 @@ namespace UBB_SE_2024_Music.Services
                 .Where(artist => artist.Name == artistName)
                 .First();
             if (artist == null)
-            {
+        {
                 throw new InvalidOperationException($"No artist found with the name {artistName}.");
             }
             var songs = (await songRepository.GetAll()).Where(s => s.ArtistId == artist.ArtistId).ToList();

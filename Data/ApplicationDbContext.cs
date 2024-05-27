@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using NamespaceCBlurred.Data.Models;
 using UBB_SE_2024_Music.Models;
 
 namespace UBB_SE_2024_Music.Data
@@ -27,5 +28,8 @@ namespace UBB_SE_2024_Music.Data
         public DbSet<Sound> Sounds { get; set; }
         public DbSet<Playlist> Playlists { get; set; }
         public DbSet<PlaylistSongItem> PlaylistSongItems { get; set; }
+
+        public virtual DbSet<Creation> Creations { get; set; }
+        public virtual DbSet<CreationSoundItem> CreationSoundItems { get; set; }
     }
 }
