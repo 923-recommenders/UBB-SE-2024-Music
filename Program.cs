@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using UBB_SE_2024_Music.Data;
-using UBB_SE_2024_Music.Repositories;
-using UBB_SE_2024_Music.Services;
 
 namespace UBB_SE_2024_Music
 {
