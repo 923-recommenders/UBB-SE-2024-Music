@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Microsoft.IdentityModel.Tokens;
+using UBB_SE_2024_Music.Enums;
 using UBB_SE_2024_Music.Models;
 using UBB_SE_2024_Music.Repositories;
 
