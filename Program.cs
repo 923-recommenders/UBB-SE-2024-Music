@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using UBB_SE_2024_Music.Data;
+using UBB_SE_2024_Music.Models;
+using UBB_SE_2024_Music.Repositories;
+using UBB_SE_2024_Music.Services;
 
 namespace UBB_SE_2024_Music
 {
@@ -19,7 +22,11 @@ namespace UBB_SE_2024_Music
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddScoped<IRepository<Song>, Repository<Song>>();
+            builder.Services.AddScoped<IRepository<SongFeatures>, Repository<SongFeatures>>();
+            builder.Services.AddScoped<IRepository<SongRecommendationDetails>, Repository<SongRecommendationDetails>>();
+            builder.Services.AddScoped<IRepository<ArtistDetails>, Repository<ArtistDetails>>();
+            builder.Services.AddScoped<ArtistDashboardService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
