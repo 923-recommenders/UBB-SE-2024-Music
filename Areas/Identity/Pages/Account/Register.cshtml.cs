@@ -98,8 +98,16 @@ namespace UBB_SE_2024_Music.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-        }
 
+            [Required]
+            [Display(Name = "Country")]
+            public string Country { get; set; }
+
+            [Required]
+            [Range(1, 120, ErrorMessage = "Please enter a valid age.")]
+            [Display(Name = "Age")]
+            public int Age { get; set; }
+        }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -122,6 +130,7 @@ namespace UBB_SE_2024_Music.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
