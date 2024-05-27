@@ -54,9 +54,16 @@ namespace UBB_SE_2024_Music.Services
         /// </summary>
         /// <param name="artistId">The ID of the artist.</param>
         /// <returns>A list of simplified song information models for the specified artist.</returns>
-        public async Task<List<SongBasicInformation>> GetAllArtistSongsAsync(int artistId)
+        public async Task<List<SongBasicInformation>> GetAllArtistSongsAsync(string artistName)
         {
-            var songs = (await songRepository.GetAll()).Where(s => s.ArtistId == artistId).ToList();
+            var artist = (await artistRepository.GetAll())
+                .Where(artist => artist.Name == artistName)
+                .First();
+            if (artist == null)
+            {
+                throw new InvalidOperationException($"No artist found with the name {artistName}.");
+            }
+            var songs = (await songRepository.GetAll()).Where(s => s.ArtistId == artist.ArtistId).ToList();
             var artistSongs = new List<SongBasicInformation>();
             foreach (var song in songs)
             {
