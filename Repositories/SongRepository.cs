@@ -44,40 +44,15 @@ namespace UBB_SE_2024_Music.Repositories
 
         public async Task<List<Song>> GetTop5MostListenedSongs(int userId)
         {
-            /*SELECT * FROM SongBasicDetails WHERE song_id IN (SELECT TOP 5 song_id FROM UserPlaybackBehaviour WHERE user_id = @userId
-             AND event_type = 2 GROUP BY song_id ORDER BY COUNT(song_id) DESC);*/
-
-            /*var top5SongIds = await _context.UserPlaybackBehaviour
-                .Where(ub => ub.UserId == userId && ub.EventType == PlaybackEventType.StartSongPlayback)
-                .GroupBy(ub => ub.SongId)
-                .OrderByDescending(g => g.Count())
-                .Select(g => g.Key)
-                .Take(5)
-                .ToListAsync();
-
-            return await _context.SongDataBaseModel
-                .Where(song => top5SongIds.Contains(song.SongId))
-                .ToListAsync();*/
-
-            /*return await _context.UserPlaybackBehaviour
-                .Where(upb => upb.UserId == userId && upb.EventType == PlaybackEventType.StartSongPlayback)
-                .GroupBy(upb => upb.SongId)
-                .Select(g => new { SongId = g.Key, Count = g.Count() })
-                .OrderByDescending(g => g.Count)
-                .Take(5)
-                .Select(g => _context.SongDataBaseModel.Find(g.SongId))
-                .ToListAsync();*/
-
             return await context.Songs
                 .Where(song => context.UserPlaybackBehaviour
-                    .Where(ub => ub.UserId == userId && ub.EventType == PlaybackEventType.StartSongPlayback)
-                    .GroupBy(ub => ub.SongId)
-                    .Select(g => g.Key)
+                    .Where(userPlayback => userPlayback.UserId == userId && userPlayback.EventType == PlaybackEventType.StartSongPlayback)
+                    .GroupBy(userPlayback => userPlayback.SongId)
+                    .Select(group => group.Key)
                     .Take(5)
                     .Contains(song.SongId))
                 .ToListAsync();
         }
-
         public async Task<Tuple<Song, decimal>> GetMostPlayedSongPercentile(int userId)
         {
             var mostPlayedSong = await GetMostPlayedSong(userId);
@@ -89,10 +64,10 @@ namespace UBB_SE_2024_Music.Repositories
         private async Task<Song> GetMostPlayedSong(int userId)
         {
             var mostPlayedSongId = await context.UserPlaybackBehaviour
-                .Where(ub => ub.UserId == userId && ub.EventType == PlaybackEventType.StartSongPlayback && ub.Timestamp.Year == DateTime.UtcNow.Year)
-                .GroupBy(ub => ub.SongId)
-                .OrderByDescending(g => g.Count())
-                .Select(g => g.Key)
+                .Where(userPlayback => userPlayback.UserId == userId && userPlayback.EventType == PlaybackEventType.StartSongPlayback && userPlayback.Timestamp.Year == DateTime.UtcNow.Year)
+                .GroupBy(userPlayback => userPlayback.SongId)
+                .OrderByDescending(group => group.Count())
+                .Select(group => group.Key)
                 .FirstOrDefaultAsync();
 
             return await context.Songs
@@ -103,21 +78,21 @@ namespace UBB_SE_2024_Music.Repositories
         private async Task<int> GetTotalSongsPlayedByUser(int userId)
         {
             return await context.UserPlaybackBehaviour
-                .Where(ub => ub.UserId == userId && ub.EventType == PlaybackEventType.StartSongPlayback && ub.Timestamp.Year == DateTime.UtcNow.Year)
+                .Where(userPlayback => userPlayback.UserId == userId && userPlayback.EventType == PlaybackEventType.StartSongPlayback && userPlayback.Timestamp.Year == DateTime.UtcNow.Year)
                 .CountAsync();
         }
 
         private async Task<int> GetMostListenedSongCount(int userId)
         {
             var mostListenedSongId = await context.UserPlaybackBehaviour
-                .Where(ub => ub.UserId == userId && ub.EventType == PlaybackEventType.StartSongPlayback && ub.Timestamp.Year == DateTime.UtcNow.Year)
-                .GroupBy(ub => ub.SongId)
-                .OrderByDescending(g => g.Count())
-                .Select(g => g.Key)
+                .Where(userPlayback => userPlayback.UserId == userId && userPlayback.EventType == PlaybackEventType.StartSongPlayback && userPlayback.Timestamp.Year == DateTime.UtcNow.Year)
+                .GroupBy(userPlayback => userPlayback.SongId)
+                .OrderByDescending(group => group.Count())
+                .Select(group => group.Key)
                 .FirstOrDefaultAsync();
 
             return await context.UserPlaybackBehaviour
-                .Where(ub => ub.UserId == userId && ub.EventType == PlaybackEventType.StartSongPlayback && ub.Timestamp.Year == DateTime.UtcNow.Year && ub.SongId == mostListenedSongId)
+                .Where(userPlayback => userPlayback.UserId == userId && userPlayback.EventType == PlaybackEventType.StartSongPlayback && userPlayback.Timestamp.Year == DateTime.UtcNow.Year && userPlayback.SongId == mostListenedSongId)
                 .CountAsync();
         }
 
@@ -132,14 +107,14 @@ namespace UBB_SE_2024_Music.Repositories
         private async Task<MostPlayedArtistInformation> GetMostPlayedArtistInfoAsync(int userId)
         {
             return await context.UserPlaybackBehaviour
-                .Where(ub =>
-                    ub.UserId == userId && ub.EventType == PlaybackEventType.StartSongPlayback &&
-                    ub.Timestamp.Year == DateTime.UtcNow.Year)
+                .Where(userPlayback =>
+                    userPlayback.UserId == userId && userPlayback.EventType == PlaybackEventType.StartSongPlayback &&
+                    userPlayback.Timestamp.Year == DateTime.UtcNow.Year)
                 .Join(
                     context.Songs,
-                    ub => ub.SongId,
-                    sd => sd.SongId,
-                    (ub, sd) => new { ArtistId = sd.ArtistId })
+                    userPlayback => userPlayback.SongId,
+                    song => song.SongId,
+                    (userPlayback, song) => new { ArtistId = song.ArtistId })
                 .GroupBy(result => result.ArtistId)
                 .Select(group => new MostPlayedArtistInformation
                 {
@@ -153,27 +128,27 @@ namespace UBB_SE_2024_Music.Repositories
         private async Task<string> GetMostPlayedArtist(int userId, MostPlayedArtistInformation mostPlayedArtistInfo)
         {
             return await context.ArtistDetails
-                .Where(ad => ad.ArtistId == mostPlayedArtistInfo.Artist_Id)
-                .Select(ad => ad.Name)
+                .Where(artistDetails => artistDetails.ArtistId == mostPlayedArtistInfo.Artist_Id)
+                .Select(artistDetails => artistDetails.Name)
                 .FirstOrDefaultAsync();
         }
 
         private async Task<int> GetTotalNumberOfSongs(int userId)
         {
             return await context.UserPlaybackBehaviour
-                .Where(ub => ub.UserId == userId && ub.EventType == PlaybackEventType.StartSongPlayback && ub.Timestamp.Year == DateTime.UtcNow.Year)
+                .Where(userPlayback => userPlayback.UserId == userId && userPlayback.EventType == PlaybackEventType.StartSongPlayback && userPlayback.Timestamp.Year == DateTime.UtcNow.Year)
                 .CountAsync();
         }
 
         public async Task<List<string>> GetTop5Genres(int userId)
         {
             return await context.UserPlaybackBehaviour
-                .Where(ub => ub.UserId == userId && ub.EventType == PlaybackEventType.StartSongPlayback && ub.Timestamp.Year == DateTime.UtcNow.Year)
+                .Where(userPlayback => userPlayback.UserId == userId && userPlayback.EventType == PlaybackEventType.StartSongPlayback && userPlayback.Timestamp.Year == DateTime.UtcNow.Year)
                 .Join(
                     context.Songs,
-                    ub => ub.SongId,
-                    sb => sb.SongId,
-                    (ub, sb) => sb.Genre)
+                    userPlayback => userPlayback.SongId,
+                    song => song.SongId,
+                    (userPlayback, song) => song.Genre)
                 .GroupBy(genre => genre)
                 .OrderByDescending(group => group.Count())
                 .Select(group => group.Key)
@@ -185,19 +160,19 @@ namespace UBB_SE_2024_Music.Repositories
         {
             var currentYearGenres = await context.Songs
                 .Where(sb => context.UserPlaybackBehaviour
-                    .Where(ub => ub.UserId == userId && ub.EventType == PlaybackEventType.StartSongPlayback && ub.Timestamp.Year == DateTime.UtcNow.Year)
-                    .Select(ub => ub.SongId)
+                    .Where(userPlayback => userPlayback.UserId == userId && userPlayback.EventType == PlaybackEventType.StartSongPlayback && userPlayback.Timestamp.Year == DateTime.UtcNow.Year)
+                    .Select(userPlayback => userPlayback.SongId)
                     .Contains(sb.SongId))
-                .Select(sb => sb.Genre)
+                .Select(song => song.Genre)
                 .Distinct()
                 .ToListAsync();
 
             var previousYearGenres = await context.Songs
-                .Where(sb => context.UserPlaybackBehaviour
-                    .Where(ub => ub.UserId == userId && ub.EventType == PlaybackEventType.StartSongPlayback && ub.Timestamp.Year == DateTime.UtcNow.Year - 1)
-                    .Select(ub => ub.SongId)
-                    .Contains(sb.SongId))
-                .Select(sb => sb.Genre)
+                .Where(song => context.UserPlaybackBehaviour
+                    .Where(userPlayback => userPlayback.UserId == userId && userPlayback.EventType == PlaybackEventType.StartSongPlayback && userPlayback.Timestamp.Year == DateTime.UtcNow.Year - 1)
+                    .Select(userPlayback => userPlayback.SongId)
+                    .Contains(song.SongId))
+                .Select(song => song.Genre)
                 .ToListAsync();
 
             return currentYearGenres.Except(previousYearGenres).ToList();
