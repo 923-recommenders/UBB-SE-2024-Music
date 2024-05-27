@@ -15,7 +15,6 @@ namespace UBB_SE_2024_Music.Data
         public DbSet<AdDistributionData> AdDistributionData { get; set; }
         public DbSet<SongRecommendationDetails> SongRecommendationDetails { get; set; }
         public DbSet<UserPlaybackBehaviour> UserPlaybackBehaviour { get; set; }
-        public DbSet<SongDataBaseModel> SongDataBaseModel { get; set; }
         public DbSet<SongFeatures> SongFeatures { get; set; }
         public DbSet<Trends> Trends { get; set; }
         public DbSet<UserDemographicsDetails> UserDemographicsDetails { get; set; }
