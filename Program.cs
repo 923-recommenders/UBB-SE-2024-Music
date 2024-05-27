@@ -36,6 +36,7 @@ namespace UBB_SE_2024_Music
             builder.Services.AddSingleton<IPlaylistRepository, PlaylistRepository>();
             builder.Services.AddSingleton<IPlaylistSongItemRepository, PlaylistSongItemRepository>();
             builder.Services.AddSingleton<ICreationRepository, CreationRepository>();
+            builder.Services.AddSingleton<ISongRepository, SongRepository>();
 
             // Inject services
             builder.Services.AddSingleton<ISoundService, SoundService>();
@@ -43,16 +44,15 @@ namespace UBB_SE_2024_Music
             builder.Services.AddSingleton<IPlaylistService, PlaylistService>();
             builder.Services.AddSingleton<IPlaylistSongItemService, PlaylistSongItemService>();
             builder.Services.AddSingleton<ICreationService, CreationService>();
-            builder.Services.AddScoped<IRepository<Song>, Repository<Song>>();
-            builder.Services.AddScoped<IRepository<SongFeatures>, Repository<SongFeatures>>();
-            builder.Services.AddScoped<IRepository<SongRecommendationDetails>, Repository<SongRecommendationDetails>>();
-            builder.Services.AddScoped<IRepository<ArtistDetails>, Repository<ArtistDetails>>();
-            builder.Services.AddScoped<ArtistDashboardService>();
+            builder.Services.AddSingleton<IRepository<Song>, Repository<Song>>();
+            builder.Services.AddSingleton<IRepository<SongFeatures>, Repository<SongFeatures>>();
+            builder.Services.AddSingleton<IRepository<SongRecommendationDetails>, Repository<SongRecommendationDetails>>();
+            builder.Services.AddSingleton<IRepository<ArtistDetails>, Repository<ArtistDetails>>();
+            builder.Services.AddSingleton<ArtistDashboardService>();
 
-
-            builder.Services.AddScoped<IRecapService, RecapService>();
-            builder.Services.AddScoped<ISongBasicDetailsRepository, SongRepository>();
-            builder.Services.AddScoped<IUserPlaybackBehaviourRepository, UserPlaybackBehaviourRepository>();
+            builder.Services.AddSingleton<IRecapService, RecapService>();
+            builder.Services.AddSingleton<ISongBasicDetailsRepository, SongRepository>();
+            builder.Services.AddSingleton<IUserPlaybackBehaviourRepository, UserPlaybackBehaviourRepository>();
 
             var app = builder.Build();
 
