@@ -16,7 +16,8 @@ namespace UBB_SE_2024_Music.Services
         {
             this.userRepository = userRepository;
         }
-        public async Task<bool> RegisterUser(string username, string password, string country, string email, int age)
+
+        public async Task<bool> RegisterUser(string username, string country, string email, int age)
         {
             try
             {
@@ -25,19 +26,9 @@ namespace UBB_SE_2024_Music.Services
                     throw new ArgumentException("Username is required");
                 }
 
-                if (string.IsNullOrWhiteSpace(password))
-                {
-                    throw new ArgumentException("Password is required");
-                }
-
                 if (string.IsNullOrWhiteSpace(country))
                 {
                     throw new ArgumentException("Country is required");
-                }
-
-                if (string.IsNullOrWhiteSpace(email))
-                {
-                    throw new ArgumentException("Email is required");
                 }
 
                 if (age < 0)
@@ -54,14 +45,12 @@ namespace UBB_SE_2024_Music.Services
                 var user = new Users
                 {
                     UserName = username,
-                    Password = password,
                     Country = country,
                     Email = email,
                     Age = age,
                     Role = 1
                 };
 
-                await userRepository.BcryptPassword(user);
                 await userRepository.Add(user);
 
                 return true;
@@ -70,55 +59,6 @@ namespace UBB_SE_2024_Music.Services
             {
                 throw;
             }
-        }
-
-        public async Task<string> AuthenticateUser(string username, string password)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(username))
-                {
-                    throw new ArgumentException("Username is required");
-                }
-
-                if (string.IsNullOrWhiteSpace(password))
-                {
-                    throw new ArgumentException("Password is required");
-                }
-
-                var user = await userRepository.GetUserByUsername(username);
-
-                if (user == null)
-                {
-                    throw new ArgumentException("Invalid username or password");
-                }
-
-                if (!userRepository.VerifyPassword(password, user.Password))
-                {
-                    return null;
-                }
-                return GenerateJwtToken(user);
-            }
-            catch (ArgumentException ex)
-            {
-                throw;
-            }
-        }
-
-        public string GenerateJwtToken(Users user)
-        {
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtConfig.SecretKey));
-            var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-            var tokenOptions = new JwtSecurityToken(
-                issuer: "923/1",
-                claims: new Claim[]
-                {
-                    new Claim("username", user.UserName),
-                    new Claim("id", user.UserId.ToString()),
-                    new Claim("role", user.Role.ToString())
-                },
-                signingCredentials: signinCredentials);
-            return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
         }
 
         public async Task<bool> EnableOrDisableArtist(int userId)
