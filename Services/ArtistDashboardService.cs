@@ -58,11 +58,12 @@ namespace UBB_SE_2024_Music.Services
         {
             var artist = (await artistRepository.GetAll())
                 .Where(artist => artist.Name == artistName)
-                .First();
+                .FirstOrDefault();
             if (artist == null)
-        {
-                throw new InvalidOperationException($"No artist found with the name {artistName}.");
+            {
+                return new List<SongBasicInformation>();
             }
+
             var songs = (await songRepository.GetAll()).Where(s => s.ArtistId == artist.ArtistId).ToList();
             var artistSongs = new List<SongBasicInformation>();
             foreach (var song in songs)
