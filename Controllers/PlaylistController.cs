@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UBB_SE_2024_Music.DTO;
 using UBB_SE_2024_Music.Models;
@@ -6,6 +7,7 @@ using UBB_SE_2024_Music.Services;
 
 namespace UBB_SE_2024_Music.Controllers
 {
+    [Authorize]
     public class PlaylistController : Controller
     {
         private readonly IPlaylistService playlistService;
