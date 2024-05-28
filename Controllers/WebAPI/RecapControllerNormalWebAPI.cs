@@ -4,15 +4,15 @@ using UBB_SE_2024_Music.DTO;
 using UBB_SE_2024_Music.Enums;
 using UBB_SE_2024_Music.Services;
 
-namespace UBB_SE_2024_Music.Controllers
+namespace UBB_SE_2024_Music.Controllers.WebAPI
 {
     [Route("[controller]")]
     [ApiController]
-    public class RecapControllerNormal : ControllerBase
+    public class RecapControllerNormalWebAPI : ControllerBase
     {
         private readonly IRecapService recapService;
 
-        public RecapControllerNormal(IRecapService recapService)
+        public RecapControllerNormalWebAPI(IRecapService recapService)
         {
             this.recapService = recapService;
         }

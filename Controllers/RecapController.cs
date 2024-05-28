@@ -8,12 +8,10 @@ namespace UBB_SE_2024_Music.Controllers
 {
     public class RecapController : Controller
     {
-        private readonly IHttpClientFactory clientFactory;
         private readonly IRecapService recapService;
 
-        public RecapController(IHttpClientFactory clientFactory, IRecapService recapService)
+        public RecapController(IRecapService recapService)
         {
-            this.clientFactory = clientFactory;
             this.recapService = recapService;
         }
 
