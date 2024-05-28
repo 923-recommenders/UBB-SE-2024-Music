@@ -1,4 +1,4 @@
-﻿namespace NamespaceCBlurred.Data.Models
+﻿namespace UBB_SE_2024_Music.Models
 {
     public class Creation
     {

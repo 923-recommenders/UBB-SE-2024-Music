@@ -1,0 +1,13 @@
+﻿@model UBB_SE_2024_Music.Models.Creation
+
+@{
+    ViewData["Title"] = "Save creation";
+}
+
+<h3>Save your creation, choose a nice title</h3>
+
+<form asp-action="SaveCreation">
+    <input type="text" asp-for="Title" />
+    <input type="submit" value="Save" class="btn btn-danger" />
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

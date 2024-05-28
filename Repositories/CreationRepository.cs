@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NamespaceCBlurred.Data.Models;
 using UBB_SE_2024_Music.Data;
 using UBB_SE_2024_Music.Models;
 using UBB_SE_2024_Music.Repositories.Interfaces;

@@ -61,6 +61,7 @@ namespace UBB_SE_2024_Music
             builder.Services.AddSingleton<IRepository<SongRecommendationDetails>, Repository<SongRecommendationDetails>>();
             builder.Services.AddSingleton<IRepository<ArtistDetails>, Repository<ArtistDetails>>();
             builder.Services.AddSingleton<ArtistDashboardService>();
+            builder.Services.AddSingleton<IAudioService, AudioService>();
 
             builder.Services.AddSingleton<IRecapService, RecapService>();
             builder.Services.AddSingleton<ISongBasicDetailsRepository, SongRepository>();
