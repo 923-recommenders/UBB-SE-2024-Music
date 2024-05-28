@@ -1,13 +1,7 @@
-﻿namespace UBB_SE_2024_Music.Models
-{
-    public enum SoundType
-    {
-        DRUMS,
-        INSTRUMENT,
-        FX,
-        VOICE
-    }
+﻿using UBB_SE_2024_Music.Enums;
 
+namespace UBB_SE_2024_Music.Models
+{
     public class Sound
     {
         public int Id { get; set; }

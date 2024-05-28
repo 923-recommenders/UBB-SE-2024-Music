@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UBB_SE_2024_Music.Data;
+using UBB_SE_2024_Music.Enums;
 using UBB_SE_2024_Music.Models;
 
 namespace UBB_SE_2024_Music.Repositories
