@@ -4,6 +4,13 @@
     ViewData["Title"] = "Playlists Overview";
 }
 
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/pictureFormat.css">
+</head>
+
 <h1>Playlists Overview</h1>
 
 <p>
@@ -25,8 +32,12 @@
     {
         <tr>
             <td>@Html.DisplayFor(modelItem => item.Name)</td>
-            <td>@Html.DisplayFor(modelItem => item.ImagePath)</td>
-            <td>@Html.DisplayFor(modelItem => item.IsPrivate)</td>
+                <td>
+                    <div class="crop-container">
+                        <img src="@item.ImagePath" height="100"/>
+                        </div>
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.IsPrivate)</td>
             <td>@Html.DisplayFor(modelItem => item.UserId)</td>
             <td>
                 <div class="btn-group" role="group">
