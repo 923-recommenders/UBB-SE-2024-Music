@@ -1,7 +1,7 @@
-﻿@model UBB_SE_2024_Music.Models.Playlist
+﻿@model UBB_SE_2024_Music.DTO.PlaylistDetailsViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Details of Playlist";
 }
 
 <h1>Details</h1>
@@ -11,20 +11,41 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Playlist.Name)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.Playlist.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ImagePath)
+            @Html.DisplayNameFor(model => model.Playlist.ImagePath)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ImagePath)
+            @Html.DisplayFor(model => model.Playlist.ImagePath)
         </dd>
     </dl>
 </div>
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <h4>Songs in this Playlist</h4>
+    <hr />
+    @if (Model.Songs != null && Model.Songs.Any())
+    {
+        <ul class="list-group">
+            @foreach (var song in Model.Songs)
+            {
+                <li class="list-group-item">
+                    <strong>@Html.DisplayFor(modelItem => song.Name)</strong> by @Html.DisplayFor(modelItem => song.ArtistName)
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No songs available in this playlist.</p>
+    }
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Playlist.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

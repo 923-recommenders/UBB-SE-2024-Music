@@ -1,14 +1,21 @@
 ﻿@model IEnumerable<UBB_SE_2024_Music.Models.Sound>
 
 @{
-    ViewData["Title"] = "All Sounds";
+    ViewData["Title"] = "Creation overview";
 }
 
-<h1>Index</h1>
+<h1>Your current creation</h1>
 
 <p>
     <a asp-action="BrowseSounds">Browse sounds</a>
 </p>
+
+<form>
+    <a asp-action="Index" class="btn btn-secondary">Play</a>
+    <a asp-action="SaveCreation" class="btn btn-secondary">Save</a>
+    <a asp-action="LoadCreation" class="btn btn-secondary">Load</a>
+</form>
+
 <table class="table">
     <thead>
         <tr>

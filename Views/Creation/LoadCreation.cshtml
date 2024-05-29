@@ -1,0 +1,28 @@
+﻿@model IEnumerable<UBB_SE_2024_Music.Models.Creation>
+
+@{
+    ViewData["Title"] = "Load a creation";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Title)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                <td>
+                    <form asp-action="LoadCreation" method="post">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit">Load creation</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

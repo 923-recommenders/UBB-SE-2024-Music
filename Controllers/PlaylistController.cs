@@ -1,17 +1,22 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using UBB_SE_2024_Music.DTO;
 using UBB_SE_2024_Music.Models;
 using UBB_SE_2024_Music.Services;
 
 namespace UBB_SE_2024_Music.Controllers
 {
+    [Authorize]
     public class PlaylistController : Controller
     {
         private readonly IPlaylistService playlistService;
+        private readonly IPlaylistSongItemService playlistSongItemService;
 
-        public PlaylistController(IPlaylistService playlistService)
+        public PlaylistController(IPlaylistService playlistService, IPlaylistSongItemService playlistSongItemService)
         {
             this.playlistService = playlistService ?? throw new ArgumentNullException(nameof(playlistService));
+            this.playlistSongItemService = playlistSongItemService ?? throw new ArgumentNullException(nameof(playlistSongItemService));
         }
 
         public async Task<IActionResult> Details(int id)
@@ -24,7 +29,15 @@ namespace UBB_SE_2024_Music.Controllers
                     return NotFound();
                 }
 
-                return View(playlist);
+                var songs = await playlistSongItemService.GetSongsByPlaylistId(playlist.Id);
+
+                var viewModel = new PlaylistDetailsViewModel()
+                {
+                    Playlist = playlist,
+                    Songs = songs
+                };
+
+                return View(viewModel);
             }
             catch (ValidationException ex)
             {

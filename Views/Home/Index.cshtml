@@ -7,40 +7,55 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
-@if (SignInManager.IsSignedIn(User))
+@if (!SignInManager.IsSignedIn(User))
 {
-    <div class="searchBars">
-
-        <div class="container mt-5">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <h5>Enter a name, and see all songs with that name and their details!</h5>
-                    <form asp-controller="ArtistDashboard" asp-action="Search" method="get">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="searchInput" name="title" placeholder="song name here...">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div class="container mt-5">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <h5>Enter the artist you like, and see a list of all their songs!</h5>
-                    <form asp-controller="ArtistDashboard" asp-action="Index" method="get">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="artistInput" name="artistName" placeholder="artist name here...">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Search</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
+    <h1>You must log in.</h1>
+}
+else 
+{
+<div class="row mt-3 text-center">
+    <div class="col">
+        <form asp-controller="Creation" asp-action="Index" method="get">
+            <button type="submit" class="btn btn-primary">Create song</button>
+        </form>
     </div>
+    <div class="col">
+        <form asp-controller="Playlist" asp-action="Index" method="get">
+            <button type="submit" class="btn btn-primary">Browse playlists</button>
+        </form>
+    </div>
+</div>
+
+<div class="searchBars">
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h5>Enter a name, and see all songs with that name and their details!</h5>
+                <form asp-controller="ArtistDashboard" asp-action="Search" method="get">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="searchInput" name="title" placeholder="song name here...">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h5>Enter the artist you like, and see a list of all their songs!</h5>
+                <form asp-controller="ArtistDashboard" asp-action="Index" method="get">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="artistInput" name="artistName" placeholder="artist name here...">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 }

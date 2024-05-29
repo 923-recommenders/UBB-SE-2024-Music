@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UBB_SE_2024_Music.Models;
 using UBB_SE_2024_Music.Services;
@@ -6,15 +7,18 @@ using UBB_SE_2024_Music.Services.Interfaces;
 
 namespace UBB_SE_2024_Music.Controllers
 {
+    [Authorize]
     public class CreationController : Controller
     {
         private readonly ICreationService creationService;
         private readonly ISoundService soundService;
+        private readonly IAudioService audioService;
 
-        public CreationController(ICreationService creationService, ISoundService soundService)
+        public CreationController(ICreationService creationService, ISoundService soundService, IAudioService audioService)
         {
             this.creationService = creationService ?? throw new ArgumentNullException(nameof(creationService));
             this.soundService = soundService ?? throw new ArgumentNullException(nameof(soundService));
+            this.audioService = audioService ?? throw new ArgumentNullException(nameof(audioService));
         }
 
         public IActionResult Index()
@@ -31,7 +35,7 @@ namespace UBB_SE_2024_Music.Controllers
             }
         }
 
-        public async Task<IActionResult> AllCreations()
+        public async Task<IActionResult> LoadCreation()
         {
             try
             {
@@ -45,11 +49,13 @@ namespace UBB_SE_2024_Music.Controllers
             }
         }
 
-        public async Task<IActionResult> LoadCreation(int creationId)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LoadCreation(int id)
         {
             try
             {
-                await creationService.LoadCreation(creationId);
+                await creationService.LoadCreation(id);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -121,6 +127,24 @@ namespace UBB_SE_2024_Music.Controllers
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult PlayCreation()
+        {
+            try
+            {
+                var sounds = creationService.GetAllSoundsOfCreation();
+                audioService.PlaySounds(sounds);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = "Internal server error: " + ex.Message;
+                return View("Error");
+            }
+        }
+
         public IActionResult SaveCreation()
         {
             return View();
@@ -133,7 +157,7 @@ namespace UBB_SE_2024_Music.Controllers
             try
             {
                 await creationService.SaveCreation(title);
-                return RedirectToAction(nameof(AllCreations));
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
