@@ -130,6 +130,10 @@ namespace UBB_SE_2024_Music.Services
         public async Task<ArtistDetails> GetMostPublishedArtistAsync()
         {
             var songs = await songRepository.GetAll();
+            if (songs == null || !songs.Any())
+            {
+                return null;
+            }
             var artistSongCount = songs.GroupBy(s => s.ArtistId).ToDictionary(g => g.Key, g => g.Count());
             var artistId = artistSongCount.OrderByDescending(kvp => kvp.Value).FirstOrDefault().Key;
             return await artistRepository.GetById(artistId);
