@@ -1,13 +1,27 @@
 ﻿@model UBB_SE_2024_Music.Models.Creation
 
 @{
-    ViewData["Title"] = "Save your creation";
+    ViewData["Title"] = "Save Your Creation";
 }
 
-<h3>Save your creation, choose a nice title</h3>
-
-<form asp-action="SaveCreation">
-    <input type="text" asp-for="Title" />
-    <input type="submit" value="Save" class="btn btn-danger" />
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-</form>
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card">
+                <h5 class="card-header ">Save Your Creation</h5>
+                <div class="card-body">
+                    <form asp-action="SaveCreation">
+                        <div class="form-group mb-2">
+                            <label for="title">Title:</label>
+                            <input type="text" asp-for="Title" class="form-control" id="title" placeholder="Enter a nice title" required>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

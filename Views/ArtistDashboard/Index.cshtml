@@ -1,12 +1,38 @@
 ﻿@model List<UBB_SE_2024_Music.DTO.SongBasicInformation>
 
-<h1>Artist Songs</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Artist Songs - UBB_SE_2024_Music</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/UBB_SE_2024_Music.styles.css" asp-append-version="true" />
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5">Artist Songs</h1>
 
-<ul>
-    @foreach (var song in Model)
-    {
-        <li>
-            @Html.ActionLink(song.Name, "Details", "ArtistDashboard", new { songId = song.SongId }, null)
-        </li>
-    }
-</ul>
+    <div class="row mt-4">
+        @foreach (var song in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card text-center">
+                    <img src="@song.Image" class="card-img-top" alt="@song.Name">
+                    <div class="card-body">
+                        <h5 class="card-title">@song.Name</h5>
+                        <p class="card-text">Artist: @song.Artist</p>
+                        <a href="@Url.Action("Details", "ArtistDashboard", new { songId = song.SongId })" class="btn btn-primary">Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>
