@@ -25,8 +25,8 @@
     {
         <tr>
             <td>@Html.DisplayFor(modelItem => item.Name)</td>
-            <td>@Html.DisplayFor(modelItem => item.ImagePath)</td>
-            <td>@Html.DisplayFor(modelItem => item.IsPrivate)</td>
+                <td><img src="@item.ImagePath" alt="Image" height="100"/></td>
+                <td>@Html.DisplayFor(modelItem => item.IsPrivate)</td>
             <td>@Html.DisplayFor(modelItem => item.UserId)</td>
             <td>
                 <div class="btn-group" role="group">
