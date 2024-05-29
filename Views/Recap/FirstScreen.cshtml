@@ -1,0 +1,41 @@
+﻿@model UBB_SE_2024_Music.DTO.EndOfYearRecapViewModel
+
+@{
+	ViewData["Title"] = "FirstScreen";
+}
+
+<div id="background" style="background-color: #0A14C8; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 40px 20px;">
+	<label style="font-size: 25px; color: white; text-align: center;">
+		Sounds like you had quite the 2023. Let's play it back...
+	</label>
+	<div style="display: flex; align-items: center; justify-content: center; flex-grow: 1;">
+		<img id="genericImage" src="/images/first_screen_1.jpg" style="height: 256px; width: 256px;" />
+	</div>
+</div>
+
+<script>
+    async function changeImageAndBackground() {
+        const imageElement = document.getElementById("genericImage");
+        const backgroundElement = document.getElementById("background");
+
+        await new Promise(resolve => setTimeout(resolve, 3000));
+        imageElement.src = "/images/first_screen_2.jpg";
+        backgroundElement.style.backgroundColor = "rgb(200, 20, 200)";
+
+        await new Promise(resolve => setTimeout(resolve, 3000));
+        imageElement.src = "/images/first_screen_3.jpg";
+        backgroundElement.style.backgroundColor = "rgb(100, 200, 100)";
+
+        await new Promise(resolve => setTimeout(resolve, 3000));
+        imageElement.src = "/images/first_screen_4.jpg";
+        backgroundElement.style.backgroundColor = "rgb(200, 200, 20)";
+
+        await new Promise(resolve => setTimeout(resolve, 3000));
+        imageElement.src = "/images/first_screen_1.jpg";
+        backgroundElement.style.backgroundColor = "rgb(10, 20, 200)";
+
+        changeImageAndBackground();
+    }
+
+    changeImageAndBackground();
+</script>
