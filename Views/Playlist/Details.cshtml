@@ -4,28 +4,20 @@
     ViewData["Title"] = "Details of Playlist";
 }
 
-<h1>Details</h1>
+<h1>Details of Playlist</h1>
 
-<div>
-    <h4>Playlist</h4>
+<div class="mb-4">
+    <h4>Playlist Information</h4>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Playlist.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Playlist.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Playlist.ImagePath)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Playlist.ImagePath)
-        </dd>
+        <dt class="col-sm-2">Name:</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Playlist.Name)</dd>
+        <dt class="col-sm-2">Image:</dt>
+        <dd class="col-sm-10"><img src="@Model.Playlist.ImagePath" alt="Playlist Image" height="300"/></dd>
     </dl>
 </div>
 
-<div>
+<div class="mb-4">
     <h4>Songs in this Playlist</h4>
     <hr />
     @if (Model.Songs != null && Model.Songs.Any())
@@ -46,6 +38,6 @@
 </div>
 
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Playlist.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Playlist.Id" class="btn btn-primary">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>

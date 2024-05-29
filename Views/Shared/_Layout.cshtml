@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -6,7 +9,25 @@
     <title>@ViewData["Title"] - UBB_SE_2024_Music</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <!--<link rel="stylesheet" href="~/UBB_SE_2024_Music.styles.css" asp-append-version="true" />-->
+    <link rel="stylesheet" href="~/UBB_SE_2024_Music.styles.css" asp-append-version="true" />
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content {
+            flex: 1 0 auto;
+        }
+
+        .footer {
+            flex-shrink: 0;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -18,26 +39,32 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                    <ul class="navbar-nav me-auto">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Creation" asp-action="Index">Create Song</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Playlist" asp-action="Index">Browse Playlists</a>
+                            </li>
+                            <!-- Add more left-side buttons here -->
+                        }
                     </ul>
-                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav ms-auto">
+                        <partial name="_LoginPartial" />
+                    </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container content">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted text-center">
         <div class="container">
             &copy; 2024 - UBB_SE_2024_Music - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>

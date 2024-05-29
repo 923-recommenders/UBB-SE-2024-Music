@@ -1,39 +1,52 @@
 ﻿@model IEnumerable<UBB_SE_2024_Music.Models.Playlist>
 
 @{
-    ViewData["Title"] = "Playlists overview";
+    ViewData["Title"] = "Playlists Overview";
 }
 
-<h1>Playlists overview</h1>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/pictureFormat.css">
+</head>
+
+<h1>Playlists Overview</h1>
 
 <p>
-    <a asp-action="Create">Create a new Playlist</a>
+    <a asp-action="Create" class="btn btn-primary">Create a New Playlist</a>
 </p>
 
 <table class="table">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.First().Name)</th>
-            <th>@Html.DisplayNameFor(model => model.First().ImagePath)</th>
-            <th>@Html.DisplayNameFor(model => model.First().IsPrivate)</th>
-            <th>@Html.DisplayNameFor(model => model.First().UserId)</th>
-            <th>Actions</th>
-        </tr>
+    <thead class="table-dark">
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Image</th>
+        <th scope="col">Private</th>
+        <th scope="col">User ID</th>
+        <th scope="col">Actions</th>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                <td>@Html.DisplayFor(modelItem => item.ImagePath)</td>
-                <td>@Html.DisplayFor(modelItem => item.IsPrivate)</td>
-                <td>@Html.DisplayFor(modelItem => item.UserId)</td>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Name)</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <div class="crop-container">
+                        <img src="@item.ImagePath" height="100"/>
+                        </div>
                 </td>
-            </tr>
-        }
+                <td>@Html.DisplayFor(modelItem => item.IsPrivate)</td>
+            <td>@Html.DisplayFor(modelItem => item.UserId)</td>
+            <td>
+                <div class="btn-group" role="group">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </div>
+            </td>
+        </tr>
+    }
     </tbody>
 </table>

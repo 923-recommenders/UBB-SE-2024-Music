@@ -4,39 +4,42 @@
     ViewData["Title"] = "Creation overview";
 }
 
-<h1>Your current creation</h1>
+<h1 class="mb-4">Your Current Creation</h1>
 
-<p>
-    <a asp-action="BrowseSounds">Browse sounds</a>
-</p>
+<div class="row mb-4">
+    <div class="col">
+        <a asp-action="BrowseSounds" class="btn btn-primary">Browse Sounds</a>
+    </div>
+    <div class="col text-end">
+        <form>
+            <a asp-action="Index" class="btn btn-secondary">Play</a>
+            <a asp-action="SaveCreation" class="btn btn-secondary">Save</a>
+            <a asp-action="LoadCreation" class="btn btn-secondary">Load</a>
+        </form>
+    </div>
+</div>
 
-<form>
-    <a asp-action="Index" class="btn btn-secondary">Play</a>
-    <a asp-action="SaveCreation" class="btn btn-secondary">Save</a>
-    <a asp-action="LoadCreation" class="btn btn-secondary">Load</a>
-</form>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Name)</th>
-            <th>@Html.DisplayNameFor(model => model.Type)</th>
-            <th>Actions</th>
-        </tr>
+<table class="table table-striped">
+    <thead class="table-dark">
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Type</th>
+        <th scope="col">Actions</th>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                <td>@Html.DisplayFor(modelItem => item.Type)</td>
-                <td>
-                    <form asp-action="DeleteSoundFromCreation">
-                        <input type="hidden" name="id" value="@item.Id" />
-                        <button type="submit">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+            <td>@Html.DisplayFor(modelItem => item.Type)</td>
+            <td>
+                <form asp-action="DeleteSoundFromCreation" class="d-inline">
+                    <input type="hidden" name="id" value="@item.Id" />
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
     </tbody>
 </table>
