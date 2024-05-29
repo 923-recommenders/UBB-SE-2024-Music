@@ -1,0 +1,44 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model UBB_SE_2024_Music.DTO.PlaylistDetailsViewModel
+
+@{
+    ViewData["Title"] = "Songs Management";
+}
+
+<h1>Songs Management for @Model.Playlist.Name</h1>
+
+<div>
+    <a asp-action="AddSong" asp-route-playlistId="@Model.Playlist.Id" class="btn btn-success">Add Song</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Artist</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var song in Model.Songs)
+        {
+            <tr>
+                <td>@song.Name</td>
+                <td>@song.ArtistName</td>
+                <td>
+                    <a asp-action="EditSong" asp-route-id="@song.SongId" class="btn btn-warning">Edit</a>
+                    <a asp-action="DeleteSong" asp-route-id="@song.SongId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="Details" asp-route-id="@Model.Playlist.Id" class="btn btn-secondary">Back to Playlist Details</a>
+</div>
