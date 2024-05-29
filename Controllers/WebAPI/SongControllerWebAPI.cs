@@ -78,6 +78,41 @@ namespace UBB_SE_2024_Music.Controllers.WebAPI
             }
         }
 
+        [HttpGet("StreamSong/{songId}", Name = "StreamSong")]
+        public async Task<IActionResult> StreamSong(int songId)
+        {
+            try
+            {
+                Song? song = songService.GetSongById(songId).Result;
+                if (song == null)
+                {
+                    return NotFound();
+                }
+
+                var filePath = Path.Combine("wwwroot/Songs/" + song.SongPath);
+                if (!System.IO.File.Exists(filePath))
+                {
+                    return NotFound();
+                }
+                var memory = new MemoryStream();
+                using (var stream = new FileStream(filePath, FileMode.Open))
+                {
+                    await stream.CopyToAsync(memory);
+                }
+                memory.Position = 0;
+
+                return File(memory, "audio/mpeg", Path.GetFileName(filePath));
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
+
         [HttpDelete("{songId}")]
         public async Task<IActionResult> DeleteSong(int songId)
         {
