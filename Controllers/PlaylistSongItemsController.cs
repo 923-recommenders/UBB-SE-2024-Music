@@ -18,6 +18,12 @@ namespace UBB_SE_2024_Music.Controllers
             _playlistSongItemService = playlistSongItemService ?? throw new ArgumentNullException(nameof(playlistSongItemService));
         }
 
+        public async Task<IActionResult> Index(int id)
+        {
+            var playlistSongs = await _playlistSongItemService.GetSongsByPlaylistId(id);
+            return View(playlistSongs);
+        }
+
         public async Task<IActionResult> SongsManagement(int id)
         {
             try
