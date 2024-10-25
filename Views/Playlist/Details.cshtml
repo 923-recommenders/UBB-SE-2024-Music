@@ -35,8 +35,7 @@
     {
         <p>No songs available in this playlist.</p>
     }
-    <a href="@Url.Action("Index", "PlaylistSongItems", new { id =  @Model.Playlist.Id})" class="btn btn-primary">Details</a>
-
+    <a asp-action="SongsManagement" asp-route-id="@Model?.Playlist.Id" class="btn btn-primary">Songs Management</a>
 </div>
 
 <div>
